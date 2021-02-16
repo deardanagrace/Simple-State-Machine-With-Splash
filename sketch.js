@@ -1,40 +1,31 @@
 /***********************************************************************************
-	SimpleStateMachine - TEMPLATE
-	by Scott Kildall
+Simple State Machine with Splash
+	by Dana Capistrano
 
-	Template:
+	Template by Scott Kildall! 
 
-	(1) Add your own PNG files in the assets folder. Make sure they match the names ***exactly*** of the existing PNGs.
-	(2) Add custom drawing code to drawSplash(), drawOne(), drawTwo(), drawThree(), drawFour(), drawFive()
-	(3) You can add your own interfaces - keys, mouse events, etc in the Interfaces section
-
-	Also start your localhost before running this, otherwise no PNGs will display
-
-------------------------------------------------------------------------------------
-	The way it works — you don't need to know this for the template use
-	* array of images gets loaded at startup
-	* drawFunction is a VARIABLE that points to a function varible name
-	* drawOne(), drawTwo(), etc. are set to be functions.
-	* the the keys 1-5 will change the drawFunction variable
-  * starts with drawSplash and waits for a mousePressed event
-  * adds a key, 's' to return to the splash screen
-
-------------------------------------------------------------------------------------
-	Notes:
-	- a more advanced state machine with use array-indexing variables for each of
-		images the draw functions, but this is just for illustrative purposes
-
-	- even more advanced will be to put the draw functions into an array, would
-		be helpful for randomizing, go to the next function, etc
-
-	- next step after that would be to put interfaces into an array that maps to
-		the functions
-
+OverView:
+A bunch of moods that when you click on some keys and the mouse, it changes. Now featuring:
+instructions! and for...loops :) 
+As well as arrays for text and image 
 
 ***********************************************************************************/
 
 // Array of images
 var images = [];
+
+//Array of text
+var strings = [];
+
+//variables for text styling
+var midX;
+var startY;
+var lineHeight = 40;
+
+//color of "postit background"
+var offwhite = '#dcdaa9';
+//color of text color
+var orangetext = '#f96b03';
 
 // variable that is a function 
 var drawFunction;
@@ -56,9 +47,14 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
+ //text styling
+  midX = width/2;
+  startY = 30;
+
   // Center our drawing objects
   imageMode(CENTER);
   textAlign(CENTER);
+    rectMode(CENTER);
   textSize(24);
 
   // set to one for startup
@@ -67,59 +63,102 @@ function setup() {
 
 // Very simple, sets the background color and calls your state machine function
 function draw() {
-  background(192);
+  background('#01633d');
 
   // will call your state machine function
   drawFunction();
+
+ fill(255);
+ for (let i=0 ; i < strings.length; i++) {
+ 	text (strings[i], midX, startY + (i * lineHeight) )
+ }
 }
 
 //========= TEMPLATE: modify these functions, INSIDE the function blocks only =========
 
 //-- drawOne() will draw the image at index 0 from the array
 drawOne = function() {
-   image(images[0],width/2, height/2);
+    //background
+    noStroke();
+    fill(offwhite);
+    square(width / 2, height / 2, 700);
 
-   fill(0,0,0);
-   text("State One", width/2, height - gTextOffset);
+    //image
+    image(images[0], width / 2, height / 2);
+
+    //text
+    fill(orangetext);
+    text("Are you motived?", width / 2, height - gTextOffset);
 }
 
 //-- drawTwo() will draw the image at index 1 from the array
 drawTwo = function() {
-   image(images[1],width/2, height/2);
+   //background
+    noStroke();
+    fill(orangetext);
+    square(width / 2, height / 2, 700);
 
-   fill(240,120,0);
-   text("State Two", width/2, height - gTextOffset);
+    //image
+    image(images[1], width / 2, height / 2);
+
+    //text
+    fill(offwhite);
+    text("Are you over caffinated?", width / 2, height - gTextOffset);
 }
 
 //-- drawOne() will draw the image at index 2 from the array
 drawThree = function() {
-   image(images[2],width/2, height/2);
+    noStroke();
+    fill(offwhite);
+    square(width / 2, height / 2, 700);
 
-   fill(40,230,120);
-   text("State Three", width/2, height - gTextOffset);
+    //image
+    image(images[2], width / 2, height / 2);
+
+    //text
+    fill(orangetext);
+    text("Are you Anxious?", width / 2, height - gTextOffset);
 }
 
 //-- drawOne() will draw the image at index 3 from the array
 drawFour = function() {
-   image(images[3],width/2, height/2);
+    //background
+    noStroke();
+    fill(orangetext);
+    square(width / 2, height / 2, 700);
 
-   fill(255,255,178);
-   text("State Four", width/2, height - gTextOffset);
+    //Images
+    image(images[3], width / 2, height / 2);
+
+    //text
+    fill(offwhite);
+    text("Are you lonely?", width / 2, height - gTextOffset);
 }
 
 //-- drawOne() will draw the image at index 4 from the array
 drawFive = function() {
-   image(images[4],width/2, height/2);
+   //background
+    noStroke();
+    fill(offwhite);
+    square(width / 2, height / 2, 700);
 
-   fill(230,50,50);
-   text("State Five", width/2, height - gTextOffset);
+    //image
+    image(images[4], width / 2, height / 2);
+
+    //text
+    fill(orangetext);
+    text("Are you Overworked?", width / 2, height - gTextOffset);
 }
 
 //-- drawSplash() will draw the image at index 4 from the array
 drawSplash = function() {
    image(images[5],width/2, height/2);
+   text("click for instructions", width/2, height - gTextOffset);
 }
 
+drawInstructions = function (){
+	text ("Press 1-5 for different moods, Press s for splash page", width/2, height/2);
+}
 
 //========= TEMPLATE: add or change interface functions, as you like =========
 
@@ -145,14 +184,20 @@ function keyTyped() {
   	drawFunction = drawFive;
   }
 
-  else if( key === 's' ) {
+  else if( key === 'h' ) {
     drawFunction = drawSplash;
   }
+}
+
+function loadInstructionsArray(){
+	strings[0] = "How to Use:";
+	strings[1] = "Press H to go to the homescreen";
+	strings[2] = "Press 1-5 on the numpad to cycle through moods";
 }
 
 function mousePressed() {
   // only change state if we are in splash screen
   if( drawFunction === drawSplash ) {
-    drawFunction = drawOne;
+    drawFunction = loadInstructionsArray;
   }
 }
