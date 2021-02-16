@@ -1,5 +1,5 @@
-## Simple State Machine
-#### by Scott Kildall
+## Simple State Machine with Splash Page
+#### by Dana Capistrano
 
 
 ### Overview
@@ -15,5 +15,3 @@ This is a template for a simple state machine that goes between five states
 (3) You can add your own interfaces - keys, mouse events, etc in the Interfaces section
 
 Don't change anything else! 
-
-### How it works
